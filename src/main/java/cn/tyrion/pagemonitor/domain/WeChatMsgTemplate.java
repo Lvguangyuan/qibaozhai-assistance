@@ -1,50 +1,31 @@
 package cn.tyrion.pagemonitor.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class WeChatMsgTemplate {
 
+    @JsonProperty("touser")
     private String toUser;
 
+    @JsonProperty("template_id")
     private String templateId;
 
     // 模板消息详情链接
     private String url;
 
     // 消息顶部的颜色
+    @JsonProperty("topcolor")
     private String topColor;
 
-    private List<ParamTemplate> paramTemplateList;
+    private Map<String, ParamTemplate> data;
 
-    public String toJSON() {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("{");
-        buffer.append(String.format("\"touser\":\"%s\"", this.toUser)).append(",");
-        buffer.append(String.format("\"template_id\":\"%s\"", this.templateId)).append(",");
-        buffer.append(String.format("\"url\":\"%s\"", this.url)).append(",");
-        buffer.append(String.format("\"topcolor\":\"%s\"", this.topColor)).append(",");
-        buffer.append("\"data\":{");
-        ParamTemplate param = null;
-        for (int i = 0; i < this.paramTemplateList.size(); i++) {
-            param = paramTemplateList.get(i);
-            // 判断是否追加逗号
-            if (i < this.paramTemplateList.size() - 1){
-
-                buffer.append(String.format("\"%s\": {\"value\":\"%s\",\"color\":\"%s\"},", param.getName(), param.getValue(), param.getColor()));
-            }else{
-                buffer.append(String.format("\"%s\": {\"value\":\"%s\",\"color\":\"%s\"}", param.getName(), param.getValue(), param.getColor()));
-            }
-
-        }
-        buffer.append("}");
-        buffer.append("}");
-        return buffer.toString();
-    }
 }

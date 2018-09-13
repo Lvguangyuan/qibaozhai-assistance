@@ -10,7 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ParamTemplate {
 
-    private String name;
     private String value;
     private String color;
 }
